@@ -199,3 +199,19 @@
     !!-----------------------------------------
     !!deallocate(p)   !---为数组(指针)释放内存空间
     !end program test_pointer_5
+
+
+    ! Subroutine and call.
+    program sc_test1
+    
+    implicit none
+    
+    integer :: a,b,c
+    
+    write(*,*) 'Input data:'
+    read(*,*) a,b
+    write(*,*) a,b
+    call add(a,b)
+    
+    
+    end program sc_test1
