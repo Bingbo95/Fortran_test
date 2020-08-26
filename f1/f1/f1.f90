@@ -221,3 +221,8 @@
     !a=5
     !d = b * b - 4.0 * a * c
     !end subroutine intent_example
+    
+    !program func
+    !integer  :: b(5)=(/1,2,3,4,5/)
+    !print *, b(5)   ! 索引不能从0开始，最小为1.
+    !end program func
