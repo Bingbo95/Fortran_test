@@ -200,49 +200,51 @@
     !!deallocate(p)   !---为数组(指针)释放内存空间
     !end program test_pointer_5
 
-    program calling_func
-    implicit none
-    real :: x, y, z, disc, w
-    x = 1.0
-    y = 5.0
-    z = 2.0
-    call intent_example(x, y, z, disc)
-    Print *, "The value of the discriminant is"
-    Print *, disc
-    w = 3.0
-    
-    call intent_example(w, y, z, disc)
-    Print *, "The value of the discriminant is"
-    Print *, disc
-    end program calling_func
-
-    subroutine intent_example (a, b, c, d)
-    implicit none
-    ! dummy arguments
-    real, intent (inout) :: a
-    real, intent (in) :: b
-    real, intent (in) :: c
-    real, intent (out) :: d
-    logical :: fc = .TRUE.
-    save fc
-    if (fc) then
-        a=5
-        d = b * b - 4.0 * a * c
-        Print *, "The value of the discriminant is 1"
-    else
-        d=0
-        Print *, "The value of the discriminant is 2"
-    end if
-    if (fc) then
-        fc = .FALSE.
-        Print *, "The value of the discriminant is 3"
-    end if
-    if (fc == .FALSE.) then
-        print *, "ERROR!"
-    end if
-    end subroutine intent_example
+    !program calling_func
+    !implicit none
+    !real :: x, y, z, disc, w
+    !x = 1.0
+    !y = 5.0
+    !z = 2.0
+    !call intent_example(x, y, z, disc)
+    !Print *, "The value of the discriminant is"
+    !Print *, disc
+    !w = 3.0
+    !
+    !call intent_example(w, y, z, disc)
+    !Print *, "The value of the discriminant is"
+    !Print *, disc
+    !end program calling_func
+    !
+    !subroutine intent_example (a, b, c, d)
+    !implicit none
+    !! dummy arguments
+    !real, intent (inout) :: a
+    !real, intent (in) :: b
+    !real, intent (in) :: c
+    !real, intent (out) :: d
+    !logical :: fc = .TRUE.
+    !save fc
+    !if (fc) then
+    !    a=5
+    !    d = b * b - 4.0 * a * c
+    !    Print *, "The value of the discriminant is 1"
+    !else
+    !    d=0
+    !    Print *, "The value of the discriminant is 2"
+    !end if
+    !if (fc) then
+    !    fc = .FALSE.
+    !    Print *, "The value of the discriminant is 3"
+    !end if
+    !if (fc == .FALSE.) then
+    !    print *, "ERROR!"
+    !end if
+    !end subroutine intent_example
 
     !program func
     !integer  :: b(5)=(/1,2,3,4,5/)
     !print *, b(5)   ! 索引不能从0开始，最小为1.
     !end program func
+    
+    
