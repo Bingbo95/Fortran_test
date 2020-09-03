@@ -246,5 +246,30 @@
     !integer  :: b(5)=(/1,2,3,4,5/)
     !print *, b(5)   ! 索引不能从0开始，最小为1.
     !end program func
-    
-    
+
+    program calling_func
+    implicit none
+    real :: x, y, z
+    logical :: ok = .true.
+    x = 1.0
+    y = 5.0
+    z = 10.0
+    call xy(x,y,ok)
+    print *, z
+    end program calling_func
+
+    subroutine xy(x,y,ok)
+    implicit none
+    real :: x, y
+    logical :: ok
+    if (ok) then
+        Print *, "The value of the discriminant is "
+        print *, x
+        return
+    else
+        Print *, "The value of the discriminant is "
+        print *, y
+        return
+    end if
+
+    end subroutine xy
