@@ -275,35 +275,135 @@
     !end subroutine xy
 
 
+    !program main
+    !implicit none
+    !type hydrproperties
+    !    !
+    !    integer :: n_thc           ! # of coefficients in the k_theta polynomial
+    !    integer :: n_sph           ! # of coefficients in the sp. heat polynomial
+    !    integer :: n_rho           ! # of coefficients in the density polynomial
+    !    !
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_thc           ! coefficients of the hydrate thermal conductivity
+    !    !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_thc]
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_sph           ! coefficients of the hydrate specific
+    !    !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_sph]
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_rho           ! coefficients of the hydrate density
+    !    !                                      ! polynomial function [kg/m^3/c^(n-1), n=1,...,n_rho]
+    !    !                                      ! later converted to kg/... in routine <read_main_input_file>
+    !    !
+    !end type hydrproperties
+    !integer :: m, ier
+    !type(hydrproperties) :: hp
+    !read(*,*) hp%n_thc
+    !
+    !allocate(hp%p_thc(hp%n_thc), stat = ier)
+    !
+    !read(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
+    !write(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
+    !end program main
+
+    !program main
+    !implicit none
+    !call xy
+    !end program main
+    !
+    !subroutine xy
+    !implicit none
+    !logical :: ok = .false.
+    !integer :: a = 4, b = 9
+    !if (ok) then
+    !    write(*,*) a
+    !    return      ! return to main program directly.
+    !else
+    !    write(*,*) b
+    !    return
+    !end if
+    !write(*,*) "Back to main."
+    !end subroutine xy
+
+    ! XXXXXXXXXXXXXXXXXXX
+    !program calling_func
+    !implicit none
+    !real :: a, y
+    !real :: x,z
+    !
+    !logical :: ok = .true.
+    !interface xy
+    !real function xy(x,y,ok)
+    !implicit none
+    !real, intent(in) :: x
+    !real, intent(inout) :: y
+    !logical :: ok
+    !end function xy
+    !end interface
+    !a = 5.0
+    !x = 1.0
+    !y = 5.0
+    !z=xy(x,y=a+5,ok)
+    !end program calling_func
+    !
+    !real function xy(x,y,ok)
+    !implicit none
+    !real, intent(in) :: x
+    !real, intent(inout) :: y
+    !logical, intent(in) :: ok
+    !if (.not. ok) then
+    !    xy = x
+    !    y = y +1
+    !    !  print *, "the value of the discriminant is "
+    !    ! print *, x
+    !    return
+    !else
+    !    xy = y
+    !    y= y+1
+    !    !   print *, "the value of the discriminant is "
+    !    ! print *, y
+    !    return
+    !end if
+    !
+    !end function xy
+    !XXXXXXXXXXXXXXX
+
+
     program main
     implicit none
-    type hydrproperties
-        !
-        integer :: n_thc           ! # of coefficients in the k_theta polynomial
-        integer :: n_sph           ! # of coefficients in the sp. heat polynomial
-        integer :: n_rho           ! # of coefficients in the density polynomial
-        !
-        real(kind = 8),    &
-            &      dimension(:),      &
-            &      pointer :: p_thc           ! coefficients of the hydrate thermal conductivity
-        !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_thc]
-        real(kind = 8),    &
-            &      dimension(:),      &
-            &      pointer :: p_sph           ! coefficients of the hydrate specific
-        !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_sph]
-        real(kind = 8),    &
-            &      dimension(:),      &
-            &      pointer :: p_rho           ! coefficients of the hydrate density
-        !                                      ! polynomial function [kg/m^3/c^(n-1), n=1,...,n_rho]
-        !                                      ! later converted to kg/... in routine <read_main_input_file>
-        !
-    end type hydrproperties
-    integer :: m, ier
-    type(hydrproperties) :: hp
-    read(*,*) hp%n_thc
-    
-    allocate(hp%p_thc(hp%n_thc), stat = ier)
-
-    read(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
-    write(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
+    call xy
     end program main
+
+    subroutine xy
+    implicit none
+    logical :: ok = .false.
+    integer :: a = 4, b = 9
+    if (.not. ok) then
+        write(*,*) a
+        go to 100
+        go to 110
+        return      ! return to main program directly.
+    else
+        write(*,*) b
+        return
+    end if
+    write(*,*) "Back to main."
+100 write(*,*) "Back to main."
+110 print *, "Go to 329."
+    write(*,*) "Back to main1."
+    write(*,*) "Back to main2."
+    write(*,*) "Back to main3."
+    write(*,*) "Back to main4."
+    stop
+    if (.not. ok) then
+        write(*,*) a
+        ok = .true.
+        go to 110
+        return      ! return to main program directly.
+    else
+        write(*,*) b
+        return
+    end if
+    end subroutine xy
