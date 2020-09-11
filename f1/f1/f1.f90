@@ -1,14 +1,14 @@
     !  f1.f90
     !
-    !  FUNCTIONS:
-    !  f1 - Entry point of console application.
+    !  functions:
+    !  f1 - entry point of console application.
     !
 
     !****************************************************************************
     !
-    !  PROGRAM: f1
+    !  program: f1
     !
-    !  PURPOSE:  Entry point for the console application.
+    !  purpose:  entry point for the console application.
     !
     !****************************************************************************
 
@@ -16,10 +16,10 @@
     !
     !implicit none
     !
-    !! Variables
+    !! variables
     !
-    !! Body of f1
-    !print *, 'Hello World'
+    !! body of f1
+    !print *, 'hello world'
     !
     !end program f1
 
@@ -72,7 +72,7 @@
     !
     !end program main
 
-    !// Pointer test of Fortran
+    !// pointer test of fortran
     !// 如果数据对象是静态的，在编译时就会给数据对象给定一定数据的内存，并且在执行期间直到程序退出才会释放内存；
     !// 如果数据对象时动态的，对象所需要的内存可以在程序运行的过程中被创建、修改和释放。
     !// 指针、可变数组和自动数组都是动态数据对象。
@@ -109,7 +109,7 @@
 
     !program test_pointer_3
     !implicit none
-    !Integer::i,j,k
+    !integer::i,j,k
     !real,pointer::a(:)
     !real,target::b(3,4)
     !!-----------------------------------------
@@ -200,18 +200,210 @@
     !!deallocate(p)   !---为数组(指针)释放内存空间
     !end program test_pointer_5
 
+    !program calling_func
+    !implicit none
+    !real :: x, y, z, disc, w
+    !x = 1.0
+    !y = 5.0
+    !z = 2.0
+    !call intent_example(x, y, z, disc)
+    !print *, "the value of the discriminant is"
+    !print *, disc
+    !w = 3.0
+    !
+    !call intent_example(w, y, z, disc)
+    !print *, "the value of the discriminant is"
+    !print *, disc
+    !end program calling_func
+    !
+    !subroutine intent_example (a, b, c, d)
+    !implicit none
+    !! dummy arguments
+    !real, intent (inout) :: a
+    !real, intent (in) :: b
+    !real, intent (in) :: c
+    !real, intent (out) :: d
+    !logical :: fc = .true.
+    !save fc
+    !if (fc) then
+    !    a=5
+    !    d = b * b - 4.0 * a * c
+    !    print *, "the value of the discriminant is 1"
+    !else
+    !    d=0
+    !    print *, "the value of the discriminant is 2"
+    !end if
+    !if (fc) then
+    !    fc = .false.
+    !    print *, "the value of the discriminant is 3"
+    !end if
+    !if (fc == .false.) then
+    !    print *, "error!"
+    !end if
+    !end subroutine intent_example
 
-    ! Subroutine and call.
-    program sc_test1
-    
+    !program func
+    !integer  :: b(5)=(/1,2,3,4,5/)
+    !print *, b(5)   ! 索引不能从0开始，最小为1.
+    !end program func
+
+    !program calling_func
+    !implicit none
+    !real :: x, y, z
+    !logical :: ok = .true.
+    !x = 1.0
+    !y = 5.0
+    !z = 10.0
+    !call xy(x,y,ok)
+    !print *, z
+    !end program calling_func
+    !
+    !subroutine xy(x,y,ok)
+    !implicit none
+    !real :: x, y
+    !logical :: ok
+    !if (ok) then
+    !    print *, "the value of the discriminant is "
+    !    print *, x
+    !    return
+    !else
+    !    print *, "the value of the discriminant is "
+    !    print *, y
+    !    return
+    !end if
+    !
+    !end subroutine xy
+
+
+    !program main
+    !implicit none
+    !type hydrproperties
+    !    !
+    !    integer :: n_thc           ! # of coefficients in the k_theta polynomial
+    !    integer :: n_sph           ! # of coefficients in the sp. heat polynomial
+    !    integer :: n_rho           ! # of coefficients in the density polynomial
+    !    !
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_thc           ! coefficients of the hydrate thermal conductivity
+    !    !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_thc]
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_sph           ! coefficients of the hydrate specific
+    !    !                                      ! k_theta polynomial function [w/m/c^n, n=1,...,n_sph]
+    !    real(kind = 8),    &
+    !        &      dimension(:),      &
+    !        &      pointer :: p_rho           ! coefficients of the hydrate density
+    !    !                                      ! polynomial function [kg/m^3/c^(n-1), n=1,...,n_rho]
+    !    !                                      ! later converted to kg/... in routine <read_main_input_file>
+    !    !
+    !end type hydrproperties
+    !integer :: m, ier
+    !type(hydrproperties) :: hp
+    !read(*,*) hp%n_thc
+    !
+    !allocate(hp%p_thc(hp%n_thc), stat = ier)
+    !
+    !read(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
+    !write(*,*) (hp%p_thc(m), m = 1, hp%n_thc)
+    !end program main
+
+    !program main
+    !implicit none
+    !call xy
+    !end program main
+    !
+    !subroutine xy
+    !implicit none
+    !logical :: ok = .false.
+    !integer :: a = 4, b = 9
+    !if (ok) then
+    !    write(*,*) a
+    !    return      ! return to main program directly.
+    !else
+    !    write(*,*) b
+    !    return
+    !end if
+    !write(*,*) "Back to main."
+    !end subroutine xy
+
+    ! XXXXXXXXXXXXXXXXXXX
+    !program calling_func
+    !implicit none
+    !real :: a, y
+    !real :: x,z
+    !
+    !logical :: ok = .true.
+    !interface xy
+    !real function xy(x,y,ok)
+    !implicit none
+    !real, intent(in) :: x
+    !real, intent(inout) :: y
+    !logical :: ok
+    !end function xy
+    !end interface
+    !a = 5.0
+    !x = 1.0
+    !y = 5.0
+    !z=xy(x,y=a+5,ok)
+    !end program calling_func
+    !
+    !real function xy(x,y,ok)
+    !implicit none
+    !real, intent(in) :: x
+    !real, intent(inout) :: y
+    !logical, intent(in) :: ok
+    !if (.not. ok) then
+    !    xy = x
+    !    y = y +1
+    !    !  print *, "the value of the discriminant is "
+    !    ! print *, x
+    !    return
+    !else
+    !    xy = y
+    !    y= y+1
+    !    !   print *, "the value of the discriminant is "
+    !    ! print *, y
+    !    return
+    !end if
+    !
+    !end function xy
+    !XXXXXXXXXXXXXXX
+
+
+    program main
     implicit none
-    
-    integer :: a,b,c
-    
-    write(*,*) 'Input data:'
-    read(*,*) a,b
-    write(*,*) a,b
-    call add(a,b)
-    
-    
-    end program sc_test1
+    call xy
+    end program main
+
+    subroutine xy
+    implicit none
+    logical :: ok = .false.
+    integer :: a = 4, b = 9
+    if (.not. ok) then
+        write(*,*) a
+        go to 100
+        go to 110
+        return      ! return to main program directly.
+    else
+        write(*,*) b
+        return
+    end if
+    write(*,*) "Back to main."
+100 write(*,*) "Back to main."
+110 print *, "Go to 329."
+    write(*,*) "Back to main1."
+    write(*,*) "Back to main2."
+    write(*,*) "Back to main3."
+    write(*,*) "Back to main4."
+    stop
+    if (.not. ok) then
+        write(*,*) a
+        ok = .true.
+        go to 110
+        return      ! return to main program directly.
+    else
+        write(*,*) b
+        return
+    end if
+    end subroutine xy
