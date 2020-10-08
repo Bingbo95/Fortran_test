@@ -371,39 +371,72 @@
     !XXXXXXXXXXXXXXX
 
 
-    program main
-    implicit none
-    call xy
-    end program main
+    !    program main
+    !    implicit none
+    !    call xy
+    !    end program main
+    !
+    !    subroutine xy
+    !    implicit none
+    !    logical :: ok = .false.
+    !    integer :: a = 4, b = 9
+    !    if (.not. ok) then
+    !        write(*,*) a
+    !        go to 100
+    !        go to 110
+    !        return      ! return to main program directly.
+    !    else
+    !        write(*,*) b
+    !        return
+    !    end if
+    !    write(*,*) "Back to main."
+    !100 write(*,*) "Back to main."
+    !110 print *, "Go to 329."
+    !    write(*,*) "Back to main1."
+    !    write(*,*) "Back to main2."
+    !    write(*,*) "Back to main3."
+    !    write(*,*) "Back to main4."
+    !    stop
+    !    if (.not. ok) then
+    !        write(*,*) a
+    !        ok = .true.
+    !        go to 110
+    !        return      ! return to main program directly.
+    !    else
+    !        write(*,*) b
+    !        return
+    !    end if
+    !    end subroutine xy
 
-    subroutine xy
+
+    !Program new1
+    !implicit none
+    !integer :: a, b, c, d, e, xy
+    !read(*,*) a, b, c, d
+    !write(*,*) a, b, c, d
+    !e = xy(a, b, c, d)
+    !write(*,*) 'e = ', e
+    !End Program new1
+    !
+    !integer function xy(a, b, c, d)
+    !implicit none
+    !integer a, b, c, d
+    !xy = a+b+c+d;       ! 通过xy来返回值
+    !end function xy
+
+!!!! 1 == 1_1, 取前面的1作为其值.
+    program inttest
     implicit none
-    logical :: ok = .false.
-    integer :: a = 4, b = 9
-    if (.not. ok) then
-        write(*,*) a
-        go to 100
-        go to 110
-        return      ! return to main program directly.
-    else
-        write(*,*) b
-        return
-    end if
-    write(*,*) "Back to main."
-100 write(*,*) "Back to main."
-110 print *, "Go to 329."
-    write(*,*) "Back to main1."
-    write(*,*) "Back to main2."
-    write(*,*) "Back to main3."
-    write(*,*) "Back to main4."
-    stop
-    if (.not. ok) then
-        write(*,*) a
-        ok = .true.
-        go to 110
-        return      ! return to main program directly.
-    else
-        write(*,*) b
-        return
-    end if
-    end subroutine xy
+    integer(kind=1) :: a
+    read(*,*) a
+    write(*,*) "a = ", a
+    select case(a)
+    case(1_1)
+        write(*,*) "1_1"
+    case(2_1)
+        write(*,*) "2_1"
+        case default
+        write(*,*) "default"
+    end select
+
+    end program inttest
