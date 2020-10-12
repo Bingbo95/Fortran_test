@@ -425,18 +425,34 @@
     !end function xy
 
 !!!! 1 == 1_1, 取前面的1作为其值.
-    program inttest
-    implicit none
-    integer(kind=1) :: a
-    read(*,*) a
-    write(*,*) "a = ", a
-    select case(a)
-    case(1_1)
-        write(*,*) "1_1"
-    case(2_1)
-        write(*,*) "2_1"
-        case default
-        write(*,*) "default"
-    end select
-
-    end program inttest
+    !program inttest
+    !implicit none
+    !integer(kind=1) :: a
+    !read(*,*) a
+    !write(*,*) "a = ", a
+    !select case(a)
+    !case(1_1)
+    !    write(*,*) "1_1"
+    !case(2_1)
+    !    write(*,*) "2_1"
+    !    case default
+    !    write(*,*) "default"
+    !end select
+    !
+    !end program inttest
+    
+    
+    Program index
+    Implicit None
+    Real :: a, b, c, d
+    a = 1.
+    b = 2.
+    c = 3.
+    d = 4.
+    if (a > c) go to 100
+    if (b < d) go to 200
+100 Continue
+    write(*,*) "Line 100"
+200 Continue
+    write(*,*) "Line 200"
+    End Program index
