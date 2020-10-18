@@ -424,7 +424,7 @@
     !xy = a+b+c+d;       ! 通过xy来返回值
     !end function xy
 
-!!!! 1 == 1_1, 取前面的1作为其值.
+    !!!! 1 == 1_1, 取前面的1作为其值.
     !program inttest
     !implicit none
     !integer(kind=1) :: a
@@ -440,19 +440,35 @@
     !end select
     !
     !end program inttest
-    
-    
-    Program index
-    Implicit None
-    Real :: a, b, c, d
-    a = 1.
-    b = 2.
-    c = 3.
-    d = 4.
-    if (a > c) go to 100
-    if (b < d) go to 200
-100 Continue
-    write(*,*) "Line 100"
-200 Continue
-    write(*,*) "Line 200"
-    End Program index
+
+
+    !    Program index
+    !    Implicit None
+    !    Real :: a, b, c, d
+    !    a = 1.
+    !    b = 2.
+    !    c = 3.
+    !    d = 4.
+    !    if (a > c) go to 100
+    !    if (b < d) go to 200
+    !100 Continue
+    !    write(*,*) "Line 100"
+    !200 Continue
+    !    write(*,*) "Line 200"
+    !    End Program index
+
+    program array
+    implicit none
+    real(kind=8), parameter, dimension(3) :: am = (/ 1.19539337d6, 8.08183159d4, 3.33826860d3 /)
+    real(kind=8), parameter, dimension(3) :: bm = (/        3.0d0,      2.575d1,     1.0375d2 /)
+    real(kind=8), dimension(3) :: a
+    real :: b, c, d
+    a = am(1:3) * (1.0d0 - 0.8**bm(1:3))
+    d = 1.19539337d6*(1. - 0.8**3.)
+    b = 1.0d0 + sum(a(1:3))
+    c = 1.0d0 + sum(am(1:3) * (1.0d0 - 0.8**bm(1:3)))
+    write(*,*) "a = ", a
+    write(*,*) "a(1) = ", d
+    write(*,*) "b = ", b
+    write(*,*) "c = ", c
+    end program array
